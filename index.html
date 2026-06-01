@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NookMinds | Next-Gen AI Prompts</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-light: #fafcff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 1);
+            --neon-pink: #ff2a85;
+            --neon-purple: #8b5cf6;
+            --neon-cyan: #0ea5e9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow-soft: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Glowing Background Orbs (Light Mode Adjusted) */
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+            background: #fafcff;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: var(--neon-purple);
+            top: -10%; left: -10%;
+        }
+
+        .orb-2 {
+            width: 600px; height: 600px;
+            background: var(--neon-pink);
+            bottom: -20%; right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 400px; height: 400px;
+            background: var(--neon-cyan);
+            top: 30%; left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -60px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 1.25rem 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+            background: rgba(250, 252, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-purple);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            background-size: 200% auto;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-main);
+            padding: 0.7rem 1.8rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--neon-purple);
+            background: #f8fafc;
+        }
+
+        /* Hero Section */
+        header {
+            padding: 12rem 0 6rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.2rem;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        /* Interactive AI Terminal */
+        .ai-terminal {
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            position: relative;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+            padding-bottom: 1rem;
+        }
+
+        .term-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .term-btn.active {
+            background: white;
+            border-color: rgba(15, 23, 42, 0.1);
+            color: var(--text-main);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .input-box {
+            background: #f1f5f9;
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .input-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ef4444;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .output-box {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-purple);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .output-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .output-label i {
+            color: var(--neon-pink);
+        }
+
+        /* Blinking cursor for typing effect */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Store Grid */
+        .store-section {
+            padding: 5rem 0 10rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 900;
+            margin-bottom: 4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .p-icon {
+            width: 3.5rem; height: 3.5rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .p-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .p-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 2rem;
+        }
+
+        .p-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(15, 23, 42, 0.05);
+            padding-top: 1.25rem;
+        }
+
+        .p-price {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .p-buy {
+            background: var(--text-main);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover .p-buy {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+        }
+
+        @media (max-width: 968px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 3.2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Light Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i> NookMinds
+            </div>
+            <div class="nav-links">
+                <a href="#store">Prompt Store</a>
+                <a href="#demo">Live Studio</a>
+                <a href="#">Enterprise</a>
+            </div>
+            <a href="#store" class="btn-gradient">Access Hub</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="container hero-grid">
+            <div>
+                <div class="ai-badge">
+                    <i class="fa-solid fa-bolt"></i> Next-Gen AI Pipelines
+                </div>
+                <h1 class="hero-title">
+                    Engineer the <br>
+                    <span class="gradient-text">Perfect Prompt.</span>
+                </h1>
+                <p class="hero-desc">
+                    Stop guessing. We build and sell elite, battle-tested prompt architectures that force AI models to generate stunning visual assets, autonomous workflows, and flawless data arrays.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#store" class="btn-gradient">Explore Store</a>
+                    <a href="#demo" class="btn-outline">Watch Demo</a>
+                </div>
+            </div>
+
+            <!-- Animated AI Terminal (Light Mode) -->
+            <div class="glass-panel ai-terminal" id="demo">
+                <div class="terminal-header">
+                    <button class="term-btn active" onclick="loadPrompt(0, this)">Visual / Social</button>
+                    <button class="term-btn" onclick="loadPrompt(1, this)">Productivity</button>
+                    <button class="term-btn" onclick="loadPrompt(2, this)">AI Agents</button>
+                </div>
+                
+                <div class="input-box">
+                    <span class="input-label">Human Input (Weak)</span>
+                    <span id="weak-text">"Make a cool picture of a futuristic shoe."</span>
+                </div>
+
+                <div class="output-box">
+                    <span class="output-label"><i class="fa-solid fa-wand-magic-sparkles"></i> NookMinds Core Matrix Output</span>
+                    <span id="strong-text" class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Product Store Section -->
+    <section id="store" class="store-section">
+        <div class="container">
+            <h2 class="section-title">The <span class="gradient-text">Prompt Matrix</span> Store</h2>
+            
+            <div class="store-grid">
+                
+                <!-- Product 1 -->
+                <div class="glass-panel product-card">
+                    <div class="p-icon" style="background: rgba(255, 42, 133, 0.1); color: var(--neon-pink);">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <h3 class="p-title">Viral Visuals Engine</h3>
+                    <p class="p-desc">Generates hyper-realistic, scroll-stopping imagery for Instagram and TikTok. Engineered specifically for Midjourney v6 and DALL-E 3 architecture.</p>
+                    <div class="p-footer">
+                        <span class="p-price">$24</span>
+                        <a href="#" class="p-buy">Acquire</a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="glass-panel product-card">
+                    <div class="p-icon" style="background: rgba(139, 92, 246, 0.1); color: var(--neon-purple);">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    <h3 class="p-title">Executive Synthesizer</h3>
+                    <p class="p-desc">Forces ChatGPT or Claude to instantly compress scattered meeting notes and chaotic data into structured, perfectly formatted boardroom action plans.</p>
+                    <div class="p-footer">
+                        <span class="p-price">$39</span>
+                        <a href="#" class="p-buy">Acquire</a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="glass-panel product-card">
+                    <div class="p-icon" style="background: rgba(14, 165, 233, 0.1); color: var(--neon-cyan);">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="p-title">Auto-Agent Protocols</h3>
+                    <p class="p-desc">System-level prompt codes that prevent AI hallucination loops. Perfect for developers and founders building automated task-runner APIs.</p>
+                    <div class="p-footer">
+                        <span class="p-price">$89</span>
+                        <a href="#" class="p-buy">Acquire</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Data for the Animated Terminal
+        const prompts = [
+            {
+                weak: '"Make a cool picture of a futuristic shoe."',
+                strong: 'Commercial product photography, futuristic cybernetic sneaker floating in anti-gravity chamber. Volumetric neon pink lighting, hyper-detailed textures, 8k resolution, shot on 35mm lens, Unreal Engine 5 render style --ar 4:5 --v 6.0'
+            },
+            {
+                weak: '"Summarize this long messy email thread."',
+                strong: 'Act as an elite Chief of Staff. Parse the provided text block. Output strictly in Markdown format: 1. Core Decision Made. 2. Action Items (assigned to whom). 3. Bottlenecks. Maintain a ruthless, zero-fluff corporate tone.'
+            },
+            {
+                weak: '"Write code to scrape a blog."',
+                strong: 'System Context: You are a backend API architect. Write an asynchronous web scraper in Python. Constraint: You MUST implement exponential backoff and output data explicitly into a JSON array. Do not write explanation prose. Output code ONLY.'
+            }
+        ];
+
+        let typingInterval;
+
+        // Function to animate typing effect
+        function typeWriter(text, elementId, speed = 25) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '';
+            element.classList.add('cursor');
+            let i = 0;
+            
+            clearInterval(typingInterval);
+            
+            typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                    element.classList.remove('cursor'); // Stop blinking when done
+                }
+            }, speed);
+        }
+
+        // Handle tab switching
+        function loadPrompt(index, btnElement) {
+            // Update active button
+            document.querySelectorAll('.term-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Set weak text instantly
+            document.getElementById('weak-text').innerText = prompts[index].weak;
+            
+            // Animate strong text
+            typeWriter(prompts[index].strong, 'strong-text');
+        }
+
+        // Initialize first prompt on load
+        window.onload = () => {
+            typeWriter(prompts[0].strong, 'strong-text');
+        };
+    </script>
+</body>
+</html>
